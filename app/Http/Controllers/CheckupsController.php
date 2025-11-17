@@ -17,14 +17,12 @@ class CheckupsController extends Controller
 
     public function store()
     {
-        // Validate checkup data
         $checkup = Checkup::create([
             'pet_id' => request('pet_id'),
             'checkup_date' => request('checkup_date'),
             'notes' => request('notes'),
         ]);
 
-        // Create treatment if provided
         if (request('treatment_type')) {
             Treatment::create([
                 'checkup_id' => $checkup->id,
@@ -53,7 +51,7 @@ class CheckupsController extends Controller
     public function destroy($id)
     {
         $checkup = Checkup::findOrFail($id);
-        $checkup->delete(); // Treatment will be deleted automatically due to cascade
+        $checkup->delete(); 
 
         return redirect()->route('checkups.index')->with('success', 'Checkup deleted successfully');
     }
